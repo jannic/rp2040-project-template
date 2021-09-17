@@ -5,8 +5,8 @@
 #![no_main]
 
 use cortex_m_rt::entry;
-use defmt::*;
-use defmt_rtt as _;
+//use defmt::*;
+//use defmt_rtt as _;
 use embedded_hal::digital::v2::OutputPin;
 use embedded_time::fixed_point::FixedPoint;
 use panic_probe as _;
@@ -21,11 +21,11 @@ use hal::{
 
 #[link_section = ".boot2"]
 #[used]
-pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_W25Q080;
+pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_RAM_MEMCPY;
 
 #[entry]
 fn main() -> ! {
-    info!("Program start");
+    //info!("Program start");
     let mut pac = pac::Peripherals::take().unwrap();
     let core = pac::CorePeripherals::take().unwrap();
     let mut watchdog = Watchdog::new(pac.WATCHDOG);
@@ -57,10 +57,10 @@ fn main() -> ! {
     let mut led_pin = pins.gpio25.into_push_pull_output();
 
     loop {
-        info!("on!");
+        //info!("on!");
         led_pin.set_high().unwrap();
-        delay.delay_ms(500);
-        info!("off!");
+        delay.delay_ms(100);
+        //info!("off!");
         led_pin.set_low().unwrap();
         delay.delay_ms(500);
     }

@@ -21,6 +21,10 @@ fn main() {
         .unwrap()
         .write_all(include_bytes!("memory.x"))
         .unwrap();
+    File::create(out.join("link.x"))
+        .unwrap()
+        .write_all(include_bytes!("link.x"))
+        .unwrap();
     println!("cargo:rustc-link-search={}", out.display());
 
     // By default, Cargo will re-run a build script whenever
