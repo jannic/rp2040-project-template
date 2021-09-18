@@ -78,7 +78,7 @@ SECTIONS
 
     /* Device specific interrupts */
     KEEP(*(.vector_table.interrupts)); /* this is the `__INTERRUPTS` symbol */
-  } > RAM AT > FLASH
+  } > FLASH
 
   PROVIDE(_stext = ADDR(.vector_table) + SIZEOF(.vector_table));
 
