@@ -64,7 +64,7 @@ fn main() -> ! {
 
     delay.delay_ms(1000);
     loop {
-        info!("A!");
+        //info!("A!");
         /*
         //led_pin.set_high().unwrap();
         delay.delay_ms(501);
@@ -102,15 +102,12 @@ fn test() -> ! {
     let mut led_pin = pins.gpio25.into_push_pull_output();
     let mut delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().integer());
     loop {
-        info!("B!");
-        /*
         info!("on!");
         led_pin.set_high().unwrap();
         delay.delay_ms(500);
         info!("off!");
         led_pin.set_low().unwrap();
         delay.delay_ms(500);
-        */
     }
     //pac.PSM.frce_off.modify(|_, w| w.proc0().set_bit());
 }
