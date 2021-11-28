@@ -44,11 +44,11 @@ fn main() -> ! {
     .ok()
     .unwrap();
 
+    let mut sio = Sio::new(pac.SIO);
     use hal::multicore;
-    let mut mc = multicore::Multicore::new(&mut pac.PSM, &mut pac.PPB, &mut pac.SIO);
-    mc.spawn(1, test);
+    let mut mc = multicore::Multicore::new(&mut pac.PSM, &mut pac.PPB, &mut sio);
+    mc.cores()[1].spawn(test).unwrap();
 
-    //let sio = Sio::new(pac.SIO);
     let mut delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().integer());
     /*
 
@@ -63,6 +63,7 @@ fn main() -> ! {
     */
 
     delay.delay_ms(1000);
+    #[allow(clippy::empty_loop)]
     loop {
         //info!("A!");
         /*
