@@ -3,6 +3,7 @@
 //! This will blink an LED attached to GP25, which is the pin the Pico uses for the on-board LED.
 #![no_std]
 #![no_main]
+//#![feature(default_alloc_error_handler)]
 
 use cortex_m_rt::entry;
 use defmt::*;
@@ -22,6 +23,13 @@ use hal::{
 #[link_section = ".boot2"]
 #[used]
 pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_W25Q080;
+
+/*
+use static_alloc::Bump;
+
+#[global_allocator]
+static A: Bump<[u8; 1 << 16]> = Bump::uninit();
+*/
 
 #[entry]
 fn main() -> ! {
