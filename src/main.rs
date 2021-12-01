@@ -3,6 +3,7 @@
 //! This will blink an LED attached to GP25, which is the pin the Pico uses for the on-board LED.
 #![no_std]
 #![no_main]
+// needed for alloc
 //#![feature(default_alloc_error_handler)]
 
 use cortex_m_rt::entry;
@@ -24,16 +25,23 @@ use hal::{
 #[used]
 pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_W25Q080;
 
-/*
-use static_alloc::Bump;
+// needed for alloc
+//use alloc_cortex_m::CortexMHeap;
+//#[global_allocator]
+//static ALLOCATOR: CortexMHeap = CortexMHeap::empty();
 
-#[global_allocator]
-static A: Bump<[u8; 1 << 16]> = Bump::uninit();
-*/
 
 #[entry]
 fn main() -> ! {
     info!("Program start");
+
+    // needed for alloc
+    let start = cortex_m_rt::heap_start() as usize;
+    let size = 1024; // in bytes
+    debug!("start = {:#010x}, size = {:#010x}", start, size);
+
+//    unsafe { ALLOCATOR.init(start, size) }
+
     let mut pac = pac::Peripherals::take().unwrap();
     let core = pac::CorePeripherals::take().unwrap();
     let mut watchdog = Watchdog::new(pac.WATCHDOG);
