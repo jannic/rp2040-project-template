@@ -63,7 +63,12 @@ fn main() -> ! {
     let mut sio = Sio::new(pac.SIO);
     use hal::multicore;
     let mut mc = multicore::Multicore::new(&mut pac.PSM, &mut pac.PPB, &mut sio);
-    mc.cores()[1].spawn(test).unwrap();
+    unsafe {
+        static mut STACK: multicore::Stack<1024> = multicore::Stack{
+            mem: [0usize; 1024]
+        };
+        mc.cores()[1].spawn(test, &mut STACK).unwrap();
+    }
 
     let mut delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().integer());
     /*
@@ -81,7 +86,7 @@ fn main() -> ! {
     delay.delay_ms(1000);
     #[allow(clippy::empty_loop)]
     loop {
-        //info!("A!");
+        info!("A!");
         /*
         //led_pin.set_high().unwrap();
         delay.delay_ms(501);
