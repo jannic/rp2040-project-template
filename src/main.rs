@@ -33,6 +33,10 @@ pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_W25Q080;
 
 #[entry]
 fn main() -> ! {
+    unsafe {
+        (*pac::SIO::ptr()).spinlock[31].write(|w| w.bits(0));
+    };
+
     info!("Program start");
 
     // needed for alloc
@@ -67,7 +71,7 @@ fn main() -> ! {
         static mut STACK: multicore::Stack<1024> = multicore::Stack{
             mem: [0usize; 1024]
         };
-        mc.cores()[1].spawn(test, &mut STACK).unwrap();
+        mc.cores()[1].spawn(test, &mut STACK.mem).unwrap();
     }
 
     let mut delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().integer());
@@ -86,7 +90,14 @@ fn main() -> ! {
     delay.delay_ms(1000);
     #[allow(clippy::empty_loop)]
     loop {
-        info!("A!");
+        info!("A1");
+        //cortex_m::interrupt::free(|_| {
+        critical_section::with(|_| {
+            info!("A2"); 
+            info!("A3"); 
+        });
+        //info!("A4 {}", { defmt::export::release(); delay.delay_ms(10000); 1 });
+
         /*
         //led_pin.set_high().unwrap();
         delay.delay_ms(501);
@@ -126,10 +137,10 @@ fn test() -> ! {
     loop {
         info!("on!");
         led_pin.set_high().unwrap();
-        delay.delay_ms(500);
+        //delay.delay_ms(500);
         info!("off!");
         led_pin.set_low().unwrap();
-        delay.delay_ms(500);
+        //delay.delay_ms(500);
     }
     //pac.PSM.frce_off.modify(|_, w| w.proc0().set_bit());
 }
