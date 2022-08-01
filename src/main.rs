@@ -66,12 +66,12 @@ fn main() -> ! {
 
     let mut sio = Sio::new(pac.SIO);
     use hal::multicore;
-    let mut mc = multicore::Multicore::new(&mut pac.PSM, &mut pac.PPB, &mut sio);
+    let mut mc = multicore::Multicore::new(&mut pac.PSM, &mut pac.PPB, &mut sio.fifo);
     unsafe {
         static mut STACK: multicore::Stack<1024> = multicore::Stack{
             mem: [0usize; 1024]
         };
-        mc.cores()[1].spawn(test, &mut STACK.mem).unwrap();
+        mc.cores()[1].spawn(&mut STACK.mem, test).unwrap();
     }
 
     let mut delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().integer());
