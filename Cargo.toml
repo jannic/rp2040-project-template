@@ -12,9 +12,9 @@ cortex-m-rt = "0.7.0"
 embedded-hal = { version = "0.2.5", features=["unproven"] }
 embedded-time = "0.12.0"
 
-defmt = { version="0.3.0", path="/home/jan/embedded/defmt/defmt/" }
-defmt-rtt = { version="0.3.1", path="/home/jan/embedded/defmt/firmware/defmt-rtt/" }
-panic-probe = { version = "0.3.0", features = ["print-defmt"], path="/home/jan/embedded/defmt/firmware/panic-probe" }
+defmt = { version="0.3.0" }
+defmt-rtt = { version="0.3.1" }
+panic-probe = { version = "0.3.0", features = ["print-defmt"] }
 #defmt = { version="0.3.0" }
 #defmt-rtt = { version="0.3.0" }
 #panic-probe = { version = "0.3.0", features = ["print-defmt"] }
@@ -27,7 +27,7 @@ rp2040-hal = { git = "https://github.com/rp-rs/rp-hal", branch="main", features=
 #rp2040-hal = { version="0.5.0" }
 #alloc-cortex-m = "0.4.1"
 #rp2040-hal = { git = "https://github.com/rp-rs/rp-hal", branch="main", features=["rt", "alloc"] }
-critical-section = { version="0.2.5", features=["custom-impl"] }
+#critical-section = { version="0.2.5", features=["custom-impl"] }
 #critical-section = { version="0.2.5", features=[] }
 #static-alloc = { version="0.2.3", features=["polyfill"] }
 #atomic-polyfill = "0.1.5"

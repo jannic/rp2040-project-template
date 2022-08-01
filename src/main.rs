@@ -92,10 +92,12 @@ fn main() -> ! {
     loop {
         info!("A1");
         //cortex_m::interrupt::free(|_| {
+        /*
         critical_section::with(|_| {
             info!("A2"); 
             info!("A3"); 
         });
+        */
         //info!("A4 {}", { defmt::export::release(); delay.delay_ms(10000); 1 });
 
         /*
