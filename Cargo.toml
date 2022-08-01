@@ -23,8 +23,8 @@ rp2040-boot2 = { git = "https://github.com/rp-rs/rp2040-boot2-rs", branch="main"
 #rp2040-hal = { git = "https://github.com/rp-rs/rp-hal", branch="multicore", features=["rt"] }
 #rp2040-hal = { git = "https://github.com/rp-rs/rp-hal", rev="fdc3f7bffe437352ab31500a67ab6dd8a0a76c5d", features=["rt"] }
 #rp2040-hal = { git = "https://github.com/rp-rs/rp-hal", rev="a07c3434ee061bbfc44f0464a49d9bdeae2187ad", features=["rt"] }
-#rp2040-hal = { git = "https://github.com/rp-rs/rp-hal", branch="main", features=["rt"] }
-rp2040-hal = { version="0.5.0" }
+rp2040-hal = { git = "https://github.com/rp-rs/rp-hal", branch="main", features=["rt"] }
+#rp2040-hal = { version="0.5.0" }
 #alloc-cortex-m = "0.4.1"
 #rp2040-hal = { git = "https://github.com/rp-rs/rp-hal", branch="main", features=["rt", "alloc"] }
 critical-section = { version="0.2.5", features=["custom-impl"] }
@@ -32,11 +32,11 @@ critical-section = { version="0.2.5", features=["custom-impl"] }
 #static-alloc = { version="0.2.3", features=["polyfill"] }
 #atomic-polyfill = "0.1.5"
 
-[patch.'https://github.com/rp-rs/rp-hal.git']
-rp2040-hal = { path ="../rp-hal/rp2040-hal" }
+#[patch.'https://github.com/rp-rs/rp-hal.git']
+#rp2040-hal = { path ="../rp-hal/rp2040-hal" }
 
-[patch.crates-io]
-rp2040-hal = { path ="../rp-hal/rp2040-hal" }
+#[patch.crates-io]
+#rp2040-hal = { path ="../rp-hal/rp2040-hal" }
 #defmt = { version="0.3.0", path="/home/jan/embedded/defmt/defmt/" }
 #defmt-rtt = { version="0.3.1", path="/home/jan/embedded/defmt/firmware/defmt-rtt/" }
 
