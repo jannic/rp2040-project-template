@@ -33,9 +33,26 @@ SECTIONS {
     {
         KEEP(*(.boot2));
     } > BOOT2
-
-    .sram4 ORIGIN(SRAM4) :
-    {
-        *(.sram4);
-    } > RAM AT>FLASH 
 } INSERT BEFORE .text;
+
+
+SECTIONS {
+    .sram4 :
+    {
+	__ram4_start__ = .;
+        *(.sram4);
+	. = ALIGN(4);
+	__ram4_end__ = .;
+    } > SRAM4  AT>FLASH
+    __ram4_source__ = LOADADDR(.sram4);
+
+    .sram5 :
+    {
+	__ram5_start__ = .;
+        *(.sram5);
+	. = ALIGN(4);
+	__ram5_end__ = .;
+    } > SRAM5  AT>FLASH
+    __ram5_source__ = LOADADDR(.sram5);
+
+} INSERT AFTER .rodata;
